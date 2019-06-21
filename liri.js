@@ -24,6 +24,7 @@ if (task === "concert-this") {
     })
 }
 else if (task === "spotify-this-song") {
+    if (!term) {term = "The Sign"};
     spotify.search({ type: 'track', query: term }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
@@ -40,4 +41,23 @@ else if (task === "spotify-this-song") {
             console.log(songData);
         }
     });
+}
+else if (task === "movie-this") {
+    var movieURL = "http://www.omdbapi.com/?apikey=trilogy&t=" + term;
+    axios.get(movieURL).then(function(response) {
+        var jsonData = response.data;
+        var movieData = [
+            "\n",
+            "Title: " + jsonData.Title,
+            "Release year: " + jsonData.Year,
+            "IMDB rating: " + jsonData.imdbRating,
+            "Rotten Tomatoes rating: " + jsonData.Ratings[1].Value,
+            "Country of production: " + jsonData.Country,
+            "Language: " + jsonData.Language,
+            "Summary: " + jsonData.Plot,
+            "Actors: " + jsonData.Actors,
+            "\n"
+        ].join("\n");
+        console.log(movieData);
+    })
 }
