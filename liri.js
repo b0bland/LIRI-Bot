@@ -28,10 +28,16 @@ else if (task === "spotify-this-song") {
         if (err) {
           return console.log('Error occurred: ' + err);
         }
-       
-    //   data.tracks.items[n].artists[0].name
-        // data.tracks.items[n].name
-        // data.tracks.items[n].preview_url
-        // data.tracks.items[n].album.name
-      });
+        var jsonData = data.tracks.items;
+        for (n=0;n<jsonData.length;n++) {
+            var songData = [
+                "Artist(s): " + data.tracks.items[n].artists[0].name,
+                "Song name: " + data.tracks.items[n].name,
+                "Preview URL: " + data.tracks.items[n].preview_url,
+                "Album name: " + data.tracks.items[n].album.name,
+                "\n-------------------\n"
+            ].join("\n");
+            console.log(songData);
+        }
+    });
 }
